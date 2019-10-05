@@ -1,0 +1,193 @@
+<main class="container" data-chatRoom='{{chat_room}}' id="main-container">
+	<input type="hidden" value={{user.id}} id="sender">
+	<input type="hidden" value={{friend.id}} id="reciever">
+
+	<div href="/chatroom" class="media p-0 ">
+		<div class="media">
+			<img src="/media/profile-picture/{{friend.picture}}/70/70" class=" m-1 mr-3 rounded-circle" alt="...">
+			<div class="media-body">
+				<h5 class="mt-4 align-middle"><a href="../../profile/{{friend.username}}">{{friend.username}}</a></h5>
+				<p class="text-muted" id="connectionStatus"></p>
+			</div>
+		</div>
+	</div>
+	<hr class="mt-0">
+	</div>
+	<div class="messaging">
+		<div class="inbox_msg">
+			<div class="mesgs">
+				<div class="msg_history" id="inbox">
+
+				</div>
+				<div class="type_msg">
+					<div class="input_msg_write">
+						<textarea type="text" class="write_msg" placeholder="Type a message" id="messageBox" rows="1"></textarea>
+						<button class="msg_send_btn" id="sendMessageButton" type="button"><i class="fas fa-paper-plane"
+								aria-hidden="true"></i></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+<script src="../socket.io/socket.io.js"></script>
+<script src="../js/messenger.js"></script>
+<style>
+	/*---------chat window---------------*/
+
+	.inbox_msg {
+		clear: both;
+		overflow: hidden;
+	}
+
+	.incoming_msg_img {
+		display: inline-block;
+		width: 6%;
+	}
+
+	.incoming_msg_img img {
+		width: 100%;
+	}
+
+	.received_msg {
+		display: inline-block;
+		padding: 0 0 0 10px;
+		vertical-align: top;
+		width: auto%;
+	}
+
+	.received_withd_msg p {
+		background: #ebebeb none repeat scroll 0 0;
+		border-radius: 0 15px 15px 15px;
+		color: #646464;
+		font-size: 14px;
+		margin: 0;
+		margin-top: 0.5rem;
+		padding: 5px 10px 5px 12px;
+		width: auto%;
+	}
+
+	.time_date {
+		color: #747474;
+		display: block;
+		font-size: 12px;
+		margin-bottom: 5px;
+		margin-right: 2px;
+	}
+
+	.received_withd_msg {
+		width: auto;
+	}
+
+	.mesgs {
+		float: left;
+		padding: 2px 15px 0 25px;
+		width: 100%;
+	}
+
+	.sent_msg p {
+		background: #0465ac;
+		border-radius: 12px 15px 15px 0;
+		font-size: 14px;
+		margin: 0;
+		color: #fff;
+		padding: 5px 10px 5px 12px;
+		width: 100%;
+	}
+
+	.outgoing_msg {
+		overflow: hidden;
+		margin-right: 2px;
+	}
+
+	.sent_msg {
+		float: right;
+		width: auto%;
+	}
+
+	.input_msg_write textarea {
+		background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+		border: medium none;
+		color: #4c4c4c;
+		font-size: 15px;
+		min-height: 48px;
+		width: 100%;
+		outline: none;
+	}
+
+	.type_msg {
+		border-top: 1px solid #c4c4c4;
+		position: relative;
+	}
+
+	.image_send_btn {
+		background: #df9e13 none repeat scroll 0 0;
+		border: none;
+		border-radius: 50%;
+		cursor: pointer;
+		font-size: 15px;
+		height: 33px;
+		position: absolute;
+		top: 11px;
+		width: 33px;
+		color: #fff;
+		float: left;
+	}
+
+	.msg_send_btn {
+		background: #05728f none repeat scroll 0 0;
+		border: none;
+		border-radius: 50%;
+		color: #fff;
+		cursor: pointer;
+		font-size: 15px;
+		height: 33px;
+		position: absolute;
+		right: 0;
+		top: 11px;
+		width: 33px;
+	}
+
+	.messaging {
+		padding: 0 0 0 0;
+		border-top: #fff;
+	}
+
+	.msg_history {
+		height: 516px;
+		overflow-y: auto;
+	}
+
+	.card .card-body {
+		border-bottom: #fff !important;
+	}
+
+
+	.msg_history::-webkit-scrollbar {
+		width: 0.3rem;
+	}
+
+	.msg_history::-webkit-scrollbar-track {
+		-webkit-box-shadow: inset 0 0 0.2rem rgba(1, 10, 15, 0.3);
+		border-radius: 2%;
+	}
+
+	.msg_history::-webkit-scrollbar-thumb {
+		border-radius: 2%;
+		-webkit-box-shadow: inset 0 0 0.2rem rgba(1, 10, 15, 0.3);
+	}
+
+	@media only screen and (max-width : 420px) {
+
+		.input_msg_write input {
+			width: 75%;
+		}
+	}
+
+	@media only screen and (min-width : 1024px) {
+
+		.input_msg_write input {
+			width: 90%;
+		}
+	}
+</style>

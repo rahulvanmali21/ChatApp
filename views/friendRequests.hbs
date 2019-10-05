@@ -1,0 +1,43 @@
+<main>
+    <div class="container">
+    {{#if users}}
+    {{#each users}}
+    <div  class="media p-0 my-2" data-indexId={{this.id}}>
+        <div class="media">
+            <img src="/media/profile-picture/{{this.picture}}/200/200" width="70" height="70" class=" m-1 mr-3 rounded-circle"
+                alt="...">
+            <div class="media-body">
+                <h5 class="mt-0 align-middle"> <a href="../profile/{{this.username}}">{{this.username}}</a></h5>
+                <div class="d-inline float-right">
+                    <button class="btn btn-sm btn-outline-primary" onclick="acceptRequest({{this.id}})">accept</button>
+                    <button class="btn btn-sm btn-outline-danger" onclick="rejectRequest({{this.id}})">reject</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+    {{else}}
+    <h2 class="text-primary mt-3">No friends Request</h2>
+    {{/if}}
+</main>
+<script>
+   let acceptRequest=(id)=>{
+       let friendsObj = new Friends();
+       friendsObj.setRequestedId(id);
+       friendsObj.acceptFriendRequest()
+        .then((res)=>{
+            if(res.action){
+                changeContainerState(id);
+            }
+        });
+
+   }
+   let rejectRequest=(id)=>{
+       let friendsObj = new Friends();
+       friendsObj.setRequestedId(id);
+       friendsObj.rejectFriendRequest()
+   }
+   let changeContainerState = (id)=>{
+       $(`*[data-index=${id}]`).remove()
+   }
+</script>

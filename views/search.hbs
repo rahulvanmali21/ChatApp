@@ -1,0 +1,74 @@
+<main class="container pt-3" id="main" data-id={{user.id}}>
+    <div class="input-group">
+        <input type="text" name="search" id="search" class="form-control" placeholder="friend's username">
+        <div class="input-group-append">
+            <button class="btn btn-sm btn-secondary" type="button" aria-describedby="search-button"
+                id="search-button">Search</button>
+        </div>
+    </div>
+
+    <div class="list-unstyled mt-3" id="searchResult">
+    </div>
+
+</main>
+<style>
+    #search-results {
+        position: absolute;
+        width: 72%;
+        overflow-x: hidden
+    }
+</style>
+<script>
+    $("#search").change(() => {
+        search();
+    });
+    $("#search").keydown(() => {
+        search();
+    });
+    $("#search-button").click(() => {
+        search();
+    });
+    let search = () => {
+        if ($("#search").val().length > 1) {
+            $("#searchResult").html(spinner);
+            let friend = new Friends();
+            friend.searchFriends($("#search").val())
+                .then(res => {
+                    showResult(res);
+                });
+        } else {
+            $("#searchResult").html("");
+        }
+    }
+    const userId = parseInt($("#main").data("id"));
+    let showResult = (result) => {
+        if (result.length > 0) {
+            $("#searchResult").html("");
+            result.map((user, index) => {
+                if(user.id!= userId){
+                $("#searchResult").append(`
+                    <a href="../profile/${user.username}" class="media p-0 " id="${user.id}">
+                        <div class="media">
+                        <img src="/media/profile-picture/${user.picture}/70/70" class=" m-1 mr-3 rounded-circle" alt="...">
+                        <div class="media-body">
+                            <h5 class="mt-0 align-middle">${user.username}</h5>
+                            <p>${user.status}</p>
+                        </div>
+                        </div>
+                    </a>
+                `);
+                }
+            });
+        } else {
+            $("#searchResult").html("");
+        }
+    }
+    let spinner = `<div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>`;
+
+
+
+</script>

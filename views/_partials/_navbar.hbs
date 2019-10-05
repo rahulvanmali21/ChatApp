@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-info">
+  <div class="container">
+    <a class="navbar-brand" href="#">Acme-Chat</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/"> <i class="fas fa-home"></i> </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/friends/requests">requests <span class="badge badge-dark" id="requestBagde"></span></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/friends/list"><i class="fas fa-user-friends"></i></a>
+        </li>
+
+
+        <li class="nav-item">
+          <a class="nav-link" href="/search"><i class="fas fa-search"></i></a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {{user.username}}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            {{!-- <a class="dropdown-item" href="#"></a> --}}
+            <a class="dropdown-item" href="/profile/{{user.username}}" id="user_nav" data-id={{user.id}}>profile</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/account/logout">logout</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<script>
+  const frd = new Friends()
+  frd.getFriendRequestCount()
+    .then((res)=>{
+      if(res.count){
+        console.log("working")
+        $("#requestBagde").html(res.count)
+      }
+    })
+</script>

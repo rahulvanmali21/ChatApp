@@ -1,0 +1,58 @@
+
+<main data-userId={{user_.id}} style="overflow-x: hidden">
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="card bg-secondary">
+                <section class="card-body">
+                    <img src="/media/profile-picture/{{profile.picture}}/200/200"
+                        class="rounded-circle Responsive image mx-auto d-block" alt="...">
+                    <div class="text-center">
+                        <h2>{{user_.username}}</h2>
+                        <h6 class="text-light">{{user_.email}}</h6>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-4">120 Friends</div>
+                        <div class="col-4">5 groups</div>
+                        <div class="col-4">
+                            {{#if isFriend}}
+                            {{else}}
+                            <button
+                                class="btn btn-sm btn-outline-primary " 
+                                id="add-friend-btn"
+                                data-requested=false>Add Friend
+                            </button>
+                            {{/if}}
+                        </div>
+                    </div>
+                    <p class="lead">
+                        {{user_.status}}
+                    </p>
+                </section>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    const spinner = $(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  <span class="sr-only">Loading...</span>`);
+    const userId = parseInt($("main").attr("data-userId"));
+    const friend = new Friends();
+    $("#add-friend-btn").click(function () {
+        let request_to = parseInt($("main").attr("data-userId"));
+        friend.setRequestedId(request_to);
+        if ($(this).data("requested") == true) {
+            friend.cancelFriendRequest();
+            $(this).html(spinner);
+            $(this).data("requested", false);
+            $(this).html("Add friend");
+        } else {
+            $(this).html(spinner);
+            $(this).data("requested", true);
+            friend.sendFriendRequest();
+            $(this).removeClass("btn-outline-primary");
+            $(this).addClass("btn-primary");
+            $(this).html("requested");
+
+        }
+    });
+</script>

@@ -1,0 +1,35 @@
+<main>
+    <script src="/js/profile.js"></script>
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-8 col-lg-4">
+        <section class="card bg-secondary">
+            <div class="card-body">
+                <img src="/media/profile-picture/{{profile.picture}}/200/200" class="rounded-circle Responsive image mx-auto d-block" alt="...">
+                <div class="text-center mt-2">
+                    <button class="btn btn-primary btn-sm" id="browse-btn">browse</button>
+                    <h2>{{user.username}}</h2>
+                    <h6 class="text-light">{{user.email}}</h6>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <p class="lead text-info">120 Friends</p>
+                    </div>
+                     <div class="col-lg-4 col-md-6 col-sm-12">
+                        <p class="lead text-info">3 Groups</p>
+                    </div>
+                </div>
+                <form action="" method="POST" enctype="multipart/form-data" class="mt-4">
+                    <input type="file" name="profile_pic" id="profile_pic" class="d-none" accept="image/*">
+                    <div class="form-group">
+                        <label for="status">Whats your status?</label>
+                        <textarea class="form-control" id="status" name="status" rows="2">{{profile.status}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-sm btn-primary btn-block">Save </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+        </div>
+    </div>
+</main>
